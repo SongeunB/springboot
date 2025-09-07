@@ -10,12 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 @Slf4j
-public class ArticlecController {
+public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
@@ -73,6 +74,7 @@ public class ArticlecController {
         // 뷰 페이지 설정하기
         return "articles/edit";
     }
+
     @PostMapping("/articles/update")
     public String update(ArticleForm articleForm){
         log.info(articleForm.toString());
@@ -85,5 +87,22 @@ public class ArticlecController {
 
         // 수정 결과 페이지로 리다이렉트 하기
         return "redirect:/articles/"+target.getId();
+    }
+
+    @GetMapping("/articles/{id}/delete")
+        public String delete(@PathVariable Long id, RedirectAttributes rttr){
+        log.info("Delete article {}", id);
+        // 삭제할 대상 가져오기
+        Article target = articleRepository.findById(id).orElse(null);
+        log.info("target {}", target.toString());
+
+        // 대상 엔티티 삭제하기
+        if(target != null) {
+            articleRepository.delete(target);
+            rttr.addFlashAttribute("message", "article deleted successfully");
+        }
+
+        // 결과 페이지로 리다이렉트 하기
+        return "redirect:/articles";
     }
 }
