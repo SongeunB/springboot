@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class ArticleForm {
+public class ArticleDto {
     private Long id;
     private String title;
     private String content;

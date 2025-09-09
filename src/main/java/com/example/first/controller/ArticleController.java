@@ -1,6 +1,6 @@
 package com.example.first.controller;
 
-import com.example.first.dto.ArticleForm;
+import com.example.first.dto.ArticleDto;
 import com.example.first.entity.Article;
 import com.example.first.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/create")
-    public String CreateArticle(ArticleForm articleForm){
+    public String CreateArticle(ArticleDto articleForm){
         log.info(articleForm.toString());
         // DTO를 Entity로 변환
         Article article = articleForm.toEntity();
@@ -76,7 +76,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/update")
-    public String update(ArticleForm articleForm){
+    public String update(ArticleDto articleForm){
         log.info(articleForm.toString());
         // DTO를 엔티티로 변환하기
         Article article = articleForm.toEntity();

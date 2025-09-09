@@ -1,6 +1,6 @@
 package com.example.first.service;
 
-import com.example.first.dto.ArticleForm;
+import com.example.first.dto.ArticleDto;
 import com.example.first.entity.Article;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ class ArticleServiceTest {
         // 예상 데이터
         String title = "라라라";
         String content = "444";
-        ArticleForm articleForm = new ArticleForm(null, title, content);
+        ArticleDto articleForm = new ArticleDto(null, title, content);
         Article expected = new Article(4L, title, content);
         // 실제 데이터
         Article actual = articleService.create(articleForm);
@@ -74,7 +74,7 @@ class ArticleServiceTest {
         Long id = 4L;
         String title = "라라라";
         String content = "444";
-        ArticleForm articleForm = new ArticleForm(id, title, content);
+        ArticleDto articleForm = new ArticleDto(id, title, content);
         Article expected = null;
         // 실제 데이터
         Article actual = articleService.create(articleForm);
