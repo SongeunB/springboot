@@ -70,25 +70,6 @@ cd springboot
 ./gradlew bootRun
 ```
 
-### 4. 애플리케이션 접속
-브라우저에서 `http://localhost:8080` 접속
-
-## 🌐 주요 엔드포인트
-- `GET /articles/new` - 새 게시글 작성 폼
-- `POST /articles/create` - 게시글 생성
-- `GET /articles` - 전체 게시글 목록
-- `GET /articles/{id}` - 특정 게시글 상세 조회
-- `GET /articles/{id}/edit` - 게시글 수정 폼
-- `POST /articles/update` - 게시글 업데이트
-- `GET /articles/{id}/delete` - 게시글 삭제
-
-## 💾 데이터베이스
-- **타입**: H2 (인메모리)
-- **접속**: `http://localhost:8080/h2-console`
-- **JDBC URL**: `jdbc:h2:mem:testdb`
-- **사용자명**: `sa`
-- **비밀번호**: (없음)
-
 ## 📚 학습 목표
 - Spring Boot 프로젝트 구조 이해
 - MVC 패턴 적용
