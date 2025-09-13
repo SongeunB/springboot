@@ -1,0 +1,61 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">로그인</h3>
+                </div>
+                <div class="card-body">
+
+                    <!-- 에러 메시지 -->
+                    {{#errorMessage}}
+                        <div class="alert alert-danger" role="alert">
+                            {{errorMessage}}
+                        </div>
+                    {{/errorMessage}}
+
+                    <!-- 로그아웃 메시지 -->
+                    {{#logoutMessage}}
+                        <div class="alert alert-info" role="alert">
+                            {{logoutMessage}}
+                        </div>
+                    {{/logoutMessage}}
+
+                    <!-- 회원가입 성공 메시지 -->
+                    {{#successMessage}}
+                        <div class="alert alert-success" role="alert">
+                            {{successMessage}}
+                        </div>
+                    {{/successMessage}}
+
+                    <!-- 로그인 폼 -->
+                    <form method="post" action="/login">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">사용자명</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="사용자명을 입력하세요" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">비밀번호</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="비밀번호를 입력하세요" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">로그인</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p>계정이 없으신가요? <a href="/register">회원가입</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layouts/footer}}

@@ -1,25 +1,119 @@
 {{>layouts/header}}
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
-        <th scope="col">Content</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#articleList}}
-        <tr>
-            <th scope="row">{{id}}</th>
-            <td><a href="/articles/{{id}}">{{title}}</a></td>
-            <td>{{content}}</td>
-        </tr>
-    {{/articleList}}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <!-- 페이지 헤더 -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>
+                <i class="fas fa-list me-2"></i>
+                {{#isRecent}}최근 게시글{{/isRecent}}
+                {{^isRecent}}전체 게시글{{/isRecent}}
+            </h2>
+            {{#search}}
+                <p class="text-muted">
+                    <i class="fas fa-search me-1"></i>
+<!--                    "<strong>{{search}}</strong>" 검색 결과-->
+                </p>
+            {{/search}}
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/articles/new" class="btn btn-primary">
+                <i class="fas fa-pen me-1"></i>새 글 작성
+            </a>
+        </div>
+    </div>
 
-<a href="/articles/new">New Article</a>
+    <!-- 검색 폼 -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <form method="get" action="/articles" class="d-flex">
+                <div class="input-group me-2">
+                    <select name="type" class="form-select" style="max-width: 120px;">
+                        <option value="all">전체</option>
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                    </select>
+                    <input type="text" name="search" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
 
+    <!-- 게시글 목록 -->
+    <div class="row">
+        <div class="col-12">
+            {{#articles}}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">
+                                    <a href="/articles/{{id}}" class="text-decoration-none">
+                                        {{title}}
+                                    </a>
+                                </h5>
+                                <p class="card-text text-muted">
+                                    {{contentPreview}}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="d-flex flex-column align-items-end">
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary me-1">
+                                            <i class="fas fa-user me-1"></i>{{authorNickname}}
+                                        </span>
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-eye me-1"></i>{{viewCount}}
+                                        </span>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{formattedCreatedAt}}
+                                        {{#isUpdated}}
+                                            <span class="badge bg-warning text-dark ms-1">수정됨</span>
+                                        {{/isUpdated}}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/articles}}
+
+            {{^articles}}
+                <div class="text-center py-5">
+                    <div class="mb-3">
+                        <i class="fas fa-inbox fa-3x text-muted"></i>
+                    </div>
+                    <h4 class="text-muted">게시글이 없습니다</h4>
+
+                    <a href="/articles/new" class="btn btn-primary">
+                        <i class="fas fa-pen me-1"></i>게시글 작성하기
+                    </a>
+                </div>
+            {{/articles}}
+        </div>
+    </div>
+
+    <!-- 하단 네비게이션 -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <div class="btn-group" role="group">
+                <a href="/articles" class="btn btn-outline-secondary">
+                    <i class="fas fa-list me-1"></i>전체 목록
+                </a>
+                <a href="/articles/recent" class="btn btn-outline-secondary">
+                    <i class="fas fa-clock me-1"></i>최근 글
+                </a>
+                <a href="/my-articles" class="btn btn-outline-secondary">
+                    <i class="fas fa-user me-1"></i>내 글
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{>layouts/footer}}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,50 +8,114 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <title>Spring Boot 게시판</title>
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-home me-2"></i>Spring Boot 게시판
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-home me-1"></i>홈
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link" href="/articles">
+                        <i class="fas fa-list me-1"></i>게시글
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/articles/new">
+                        <i class="fas fa-pen me-1"></i>글쓰기
+                    </a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+            <!-- 사용자 메뉴 -->
+            <ul class="navbar-nav">
+                <!-- 로그인 상태가 아닌 경우 -->
+                <li class="nav-item d-none" id="guest-menu">
+                    <a class="nav-link" href="/login">
+                        <i class="fas fa-sign-in-alt me-1"></i>로그인
+                    </a>
+                </li>
+                <li class="nav-item d-none" id="guest-register">
+                    <a class="nav-link" href="/register">
+                        <i class="fas fa-user-plus me-1"></i>회원가입
+                    </a>
+                </li>
+
+                <!-- 로그인 상태인 경우 -->
+                <li class="nav-item dropdown d-none" id="user-menu">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-1"></i><span id="current-user">사용자</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/profile">
+                            <i class="fas fa-user-circle me-1"></i>프로필
+                        </a></li>
+                        <li><a class="dropdown-item" href="/my-articles">
+                            <i class="fas fa-newspaper me-1"></i>내 게시글
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="/logout" method="post" style="display: inline;">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-1"></i>로그아웃
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
+<!-- 알림 메시지 -->
 {{#message}}
-    <div class="alert alert-primary alert-dismissible">
-        {{message}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    <div class="alert alert-primary alert-dismissible fade show m-0" role="alert">
+        <div class="container">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </div>
 {{/message}}
+
+<!-- Spring Security 태그를 사용하지 않고 JavaScript로 처리 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 실제로는 서버에서 인증 정보를 전달받아야 하지만,
+        // 임시로 세션 스토리지나 다른 방법을 사용할 수 있습니다.
+        // 현재는 예시로만 작성합니다.
+
+        const guestMenu = document.getElementById('guest-menu');
+        const guestRegister = document.getElementById('guest-register');
+        const userMenu = document.getElementById('user-menu');
+
+        // 임시: 실제로는 서버에서 인증 상태를 확인해야 합니다
+        const isAuthenticated = false; // 이 값은 서버에서 전달받아야 합니다
+
+        if (isAuthenticated) {
+            userMenu.classList.remove('d-none');
+        } else {
+            guestMenu.classList.remove('d-none');
+            guestRegister.classList.remove('d-none');
+        }
+    });
+</script>

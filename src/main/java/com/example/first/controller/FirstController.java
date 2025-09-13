@@ -10,7 +10,7 @@ public class FirstController {
     @GetMapping("/hi")
     public String niceToMeetyou(Model model) {
         model.addAttribute("username", "Song");
-        return "greetings";
+        return "home";
     }
 
     @GetMapping("/bye")

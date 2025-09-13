@@ -1,27 +1,134 @@
 {{>layouts/header}}
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
-        <th scope="col">Content</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#article}}
-    <tr>
-        <th scope="row">{{id}}</th>
-        <td>{{title}}</td>
-        <td>{{content}}</td>
-    </tr>
-    {{/article}}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <!-- 게시글 정보 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">{{article.title}}</h3>
+                        </div>
+                        <div class="col-auto">
+                            <span class="badge bg-info">
+                                <i class="fas fa-eye me-1"></i>{{article.viewCount}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-<a href="/articles/{{article.id}}/edit" class="btn btn-primary">Edit</a>
-<a href="/articles/{{article.id}}/delete" class="btn btn-danger">Delete</a>
-<a href="/articles">Go to Article List</a>
+                <div class="card-body">
+                    <!-- 게시글 메타 정보 -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-user-circle fa-2x text-primary me-2"></i>
+                            <div>
+                                <strong>{{article.authorNickname}}</strong>
+                                <small class="text-muted d-block">@{{article.authorUsername}}</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted small">
+                                <i class="fas fa-calendar me-1"></i>{{article.formattedCreatedAt}}
+                            </div>
+                            {{#article.updated}}
+                                <div class="text-muted small">
+                                    <i class="fas fa-edit me-1"></i>{{article.formattedUpdatedAt}}
+                                    <span class="badge bg-warning text-dark ms-1">수정됨</span>
+                                </div>
+                            {{/article.updated}}
+                        </div>
+                    </div>
 
-{{>comments/_comments}}
+                    <!-- 게시글 내용 -->
+                    <div class="article-content">
+                        {{{article.content}}}
+                    </div>
+                </div>
+
+                <!-- 액션 버튼들 -->
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="/articles" class="btn btn-secondary">
+                                <i class="fas fa-list me-1"></i>목록으로
+                            </a>
+                        </div>
+
+                        {{#isAuthor}}
+                            <div class="btn-group">
+                                <a href="/articles/{{article.id}}/edit" class="btn btn-warning">
+                                    <i class="fas fa-edit me-1"></i>수정
+                                </a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fas fa-trash me-1"></i>삭제
+                                </button>
+                            </div>
+                        {{/isAuthor}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글 섹션 (향후 구현) -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-comments me-2"></i>댓글
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted text-center py-3">
+                        댓글 기능은 곧 추가될 예정입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 삭제 확인 모달 -->
+{{#isAuthor}}
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">게시글 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>정말로 이 게시글을 삭제하시겠습니까?</p>
+                    <p class="text-muted small">삭제된 게시글은 복구할 수 없습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <form method="post" action="/articles/{{article.id}}/delete" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/isAuthor}}
+
+<style>
+    .article-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .card-header h3 {
+        color: #2c3e50;
+    }
+
+    .user-info {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
 {{>layouts/footer}}

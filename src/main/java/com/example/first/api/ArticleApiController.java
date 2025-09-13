@@ -1,3 +1,4 @@
+/*
 package com.example.first.api;
 
 import com.example.first.dto.ArticleDto;
@@ -62,3 +63,4 @@ public class ArticleApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
+*/
