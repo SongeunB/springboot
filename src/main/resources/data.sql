@@ -1,8 +1,10 @@
 -- 사용자 데이터 (비밀번호는 BCrypt로 암호화된 "password123")
-INSERT INTO users (username, password, email, nickname, role, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES
+INSERT INTO users (username, password, email, nickname, role, enabled, account_non_expired, account_non_locked, credentials_non_expired)
+VALUES
      ('admin', '$2a$10$p2QTj1SudPP/G/5PWEc8JOogiss9k0L7hvGAtNpGpmiX9xEGXGRuO', 'admin@example.com', '관리자', 'ADMIN', true, true, true, true),
      ('user1', '$2a$10$p2QTj1SudPP/G/5PWEc8JOogiss9k0L7hvGAtNpGpmiX9xEGXGRuO', 'user1@example.com', '사용자1', 'USER', true, true, true, true),
-     ('user2', '$2a$10$p2QTj1SudPP/G/5PWEc8JOogiss9k0L7hvGAtNpGpmiX9xEGXGRuO', 'user2@example.com', '사용자2', 'USER', true, true, true, true);
+     ('user2', '$2a$10$p2QTj1SudPP/G/5PWEc8JOogiss9k0L7hvGAtNpGpmiX9xEGXGRuO', 'user2@example.com', '사용자2', 'USER', true, true, true, true)
+ON CONFLICT (username) DO NOTHING;
 
 -- 게시글 데이터 (author_id는 위에서 생성된 사용자들의 ID를 참조)
 INSERT INTO article (title, content, author_id, created_at, view_count) VALUES
